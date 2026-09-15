@@ -69,14 +69,48 @@
 
     <!-- ================= HERO ================= -->
     <section class="hero" id="top" aria-labelledby="hero-name">
-      <div class="container hero-content">
-        <h1 id="hero-name">Khalid<br>Alharbi</h1>
-        <p class="identity">Electrical and computer engineering student. Working toward AI software engineering.</p>
-        <p class="hero-sub">My projects so far sit between machine learning and embedded hardware: training data for an on-device privacy model, and firmware for a three-board helmet safety system.</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="#projects">See my projects</a>
-          <a class="btn btn-secondary" href="https://github.com/KhalidT-Alharbi">GitHub</a>
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <h1 id="hero-name">Khalid Alharbi</h1>
+          <p class="identity">Working toward AI software engineering.</p>
+          <p class="hero-sub">Electrical and computer engineering at King Abdulaziz University.</p>
+          <div class="actions">
+            <a class="btn btn-primary" href="#projects">See my projects</a>
+            <a class="btn btn-secondary" href="https://github.com/KhalidT-Alharbi">GitHub</a>
+          </div>
         </div>
+
+        <!-- Hero diagram: HI-BSDS alert logic, drawn from the firmware's own thresholds -->
+        <figure class="hero-figure">
+          <svg viewBox="0 0 520 300" role="img" aria-labelledby="dg-title dg-desc">
+            <title id="dg-title">How the helmet decides to warn the rider</title>
+            <desc id="dg-desc">A top-down diagram. A vehicle approaches from behind on one side, and the in-helmet LED on that side changes from off to yellow, orange, then red as the vehicle crosses the four metre, two and a half metre, and one point two metre thresholds.</desc>
+
+            <!-- lane separators -->
+            <line class="dg-lane" x1="190" y1="16" x2="190" y2="292"></line>
+            <line class="dg-lane" x1="330" y1="16" x2="330" y2="292"></line>
+
+            <!-- distance thresholds -->
+            <line class="dg-mark" x1="40" y1="250" x2="480" y2="250"></line>
+            <text class="dg-label" x="40" y="243">4.0 m</text>
+            <line class="dg-mark" x1="40" y1="180" x2="480" y2="180"></line>
+            <text class="dg-label" x="40" y="173">2.5 m</text>
+            <line class="dg-mark" x1="40" y1="110" x2="480" y2="110"></line>
+            <text class="dg-label" x="40" y="103">1.2 m</text>
+
+            <!-- approaching vehicles -->
+            <rect class="dg-car dg-car-l" x="100" y="250" width="40" height="64" rx="5"></rect>
+            <rect class="dg-car dg-car-r" x="380" y="250" width="40" height="64" rx="5"></rect>
+
+            <!-- rider: helmet with an LED strip on each side -->
+            <rect class="dg-led dg-led-l" x="222" y="44" width="9" height="32" rx="4"></rect>
+            <rect class="dg-led dg-led-r" x="289" y="44" width="9" height="32" rx="4"></rect>
+            <circle class="dg-helmet" cx="260" cy="60" r="26"></circle>
+            <path class="dg-visor" d="M245 54a17 17 0 0 1 30 0"></path>
+            <text class="dg-label" x="260" y="104" text-anchor="middle">rider</text>
+          </svg>
+          <figcaption>HI-BSDS alert logic. The in-helmet LEDs turn yellow inside 4 m, orange inside 2.5 m and red inside 1.2 m, and only when the radar confirms the vehicle is moving.</figcaption>
+        </figure>
       </div>
     </section>
 
@@ -85,8 +119,9 @@
       <div class="container">
         <h2 id="about-title">About</h2>
         <div class="about-body">
-          <p>I study electrical and computer engineering at King Abdulaziz University in Jeddah, with two years and a six-month co-op still ahead.</p>
-          <p>In early 2026 I completed the KAUST Academy AI specialization, covering deep learning, computer vision, NLP and generative AI in PyTorch. I am working toward AI software engineering in industry.</p>
+          <p>I study electrical and computer engineering at King Abdulaziz University in Jeddah, with two years and a six-month co-op still ahead. In early 2026 I completed the KAUST Academy AI specialization, covering deep learning, computer vision, NLP and generative AI in PyTorch.</p>
+          <p>My work so far has fallen on both sides of a working system: the data a model learns from, and the hardware it runs next to. On OnKith, our on-device privacy detector kept missing Saudi names, so I built the Saudi data it lacked and assembled the corpus it trained on. On HI-BSDS I wrote the firmware for three boards that fuse radar and LiDAR into a single warning a rider can read without looking away from the road.</p>
+          <p>I am looking for industry experience in AI software engineering.</p>
         </div>
       </div>
     </section>
@@ -119,7 +154,8 @@
               <summary>Details <span class="plus" aria-hidden="true"></span></summary>
               <div class="details-body">
                 <p>The PII detector kept missing Saudi names. The team agreed it needed Saudi data, and I built it: a generator that draws on official Saudi sources, with correct SAMA IBAN and 15-digit ZATCA VAT formats, plus extra rows for the entity types the detector scored worst on.</p>
-                <p>I then assembled and published the full 284,619-row training corpus. The detector trained on it reaches 0.84 private-character recall on a frozen out-of-distribution test set.</p>
+                <p>I then assembled and published the full 284,619-row training corpus: seven sources, 31 entity types, and leakage-aware splits so a model cannot be validated on rows that are near-copies of what it trained on.</p>
+                <p>The detector trained on it reaches 0.84 private-character recall on a frozen out-of-distribution test set, which the team held back from training, augmentation and model selection. That generation changed the recognizer, the label set and the data together, so the corpus is one of three reasons the number moved.</p>
               </div>
             </details>
           </article>
@@ -141,7 +177,8 @@
                   <summary>Details <span class="plus" aria-hidden="true"></span></summary>
                   <div class="details-body">
                     <p>Each side of the helmet has its own ESP32 pod reading a 24 GHz mmWave radar and an 8x8 time-of-flight LiDAR. An alert only fires when the radar confirms the target is moving, and the in-helmet LEDs turn yellow inside 4 m, orange inside 2.5 m and red inside 1.2 m.</p>
-                    <p>A third board, an ESP32-S3, streams the camera over its own Wi-Fi network with each side's threat level overlaid on the video. I wrote the firmware for all three boards.</p>
+                    <p>Each pod reads its radar at 256,000 baud and its LiDAR at 921,600 baud, then sends a compact status line to the hub twenty times a second. A colour only changes after it holds for three frames, so a single bad reading cannot make the LEDs flicker.</p>
+                    <p>A third board, an ESP32-S3, streams the camera over its own Wi-Fi network with each side's threat level overlaid on the video. Fitting three sensor streams onto one chip meant moving the debug console to USB and remapping a hardware serial port to free it for the rangefinder. I wrote the firmware for all three boards.</p>
                   </div>
                 </details>
               </div>

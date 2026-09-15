@@ -45,8 +45,8 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-sans);
-  font-size: 1.0625rem;
-  line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -161,9 +161,15 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   position: relative;
   overflow: hidden;
   display: flex;
-  align-items: flex-end;
-  min-height: min(86svh, 820px);
-  padding-block: clamp(5rem, 12vh, 8rem) clamp(3.5rem, 9vh, 6rem);
+  align-items: center;
+  min-height: min(82svh, 740px);
+  padding-block: clamp(3.5rem, 9vh, 5.5rem);
+}
+
+.hero-inner { display: grid; gap: clamp(2.5rem, 6vw, 4rem); align-items: center; }
+
+@media (min-width: 980px) {
+  .hero-inner { grid-template-columns: 1fr 1fr; }
 }
 
 /* Signature: the side glow from HI-BSDS's own camera overlay,
@@ -186,26 +192,27 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
 .hero-content { position: relative; z-index: 1; }
 
 .hero h1 {
-  font-size: clamp(3.25rem, 11vw, 7.5rem);
+  font-size: clamp(2.5rem, 6.5vw, 4.25rem);
   font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.035em;
-  margin-bottom: 1.5rem;
-}
-
-.identity {
-  font-size: clamp(1.25rem, 2.6vw, 1.625rem);
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.01em;
-  max-width: 34ch;
+  line-height: 1;
+  letter-spacing: -0.03em;
   margin-bottom: 1rem;
 }
 
+.identity {
+  font-size: clamp(1.0625rem, 1.8vw, 1.3125rem);
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  max-width: 24ch;
+  margin-bottom: 0.6rem;
+}
+
 .hero-sub {
-  color: var(--text-2);
-  max-width: 56ch;
-  margin-bottom: 2.25rem;
+  color: var(--text-3);
+  font-size: 0.9375rem;
+  max-width: 40ch;
+  margin-bottom: 2rem;
 }
 
 .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
@@ -231,6 +238,63 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
 .btn-secondary { color: var(--text); border-color: var(--line-strong); }
 .btn-secondary:hover { background: rgba(236, 242, 238, 0.06); border-color: var(--text-3); }
 
+/* ---------- Hero diagram ----------
+   A small schematic of how HI-BSDS decides, using its real thresholds.
+   Pure SVG and CSS: no video file, no JavaScript, a few KB. */
+
+.hero-figure { position: relative; z-index: 1; margin: 0; }
+
+.hero-figure svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  background: rgba(5, 13, 10, 0.55);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.hero-figure figcaption {
+  margin-top: 0.85rem;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--text-3);
+  max-width: 46ch;
+}
+
+.dg-label { font-family: var(--font-mono); font-size: 11px; fill: #6F8378; }
+.dg-lane { fill: none; stroke: rgba(236, 242, 238, 0.09); stroke-width: 1; }
+.dg-mark { stroke: rgba(236, 242, 238, 0.16); stroke-width: 1; stroke-dasharray: 3 5; }
+.dg-helmet { fill: #17291F; stroke: var(--line-strong); stroke-width: 1.5; }
+.dg-visor { fill: none; stroke: #6F8378; stroke-width: 2; stroke-linecap: round; }
+
+.dg-car { fill: #8FA197; rx: 3; }
+/* `backwards` holds the 0% frame during the delay, so the second car
+   stays hidden until its turn instead of parking on the start line. */
+.dg-car-l { animation: dg-approach 9s linear infinite backwards; }
+.dg-car-r { animation: dg-approach 9s linear infinite 4.5s backwards; }
+
+.dg-led { fill: #22332A; }
+.dg-led-l { animation: dg-led 9s linear infinite; }
+.dg-led-r { animation: dg-led 9s linear infinite 4.5s; }
+
+/* Animating the SVG geometry property `y` rather than a CSS transform:
+   transforms on SVG rects are unreliable across engines. */
+@keyframes dg-approach {
+  0%   { y: 250px; opacity: 0; }
+  5%   { y: 242px; opacity: 1; }
+  44%  { y: 82px;  opacity: 1; }
+  50%  { y: 50px;  opacity: 0; }
+  100% { y: 50px;  opacity: 0; }
+}
+
+@keyframes dg-led {
+  0%,  7%   { fill: #22332A; }
+  13%, 22%  { fill: #FFC400; }
+  27%, 33%  { fill: #FF7A00; }
+  38%, 46%  { fill: #FF3B30; }
+  50%, 100% { fill: #22332A; }
+}
+
 /* ---------- Sections ---------- */
 
 .section {
@@ -239,14 +303,14 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
 }
 
 .section h2 {
-  font-size: clamp(1.875rem, 4vw, 2.625rem);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
-  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
+  margin-bottom: clamp(1.5rem, 3.5vw, 2.25rem);
 }
 
 /* About */
-.about-body { display: grid; gap: 1.25rem; max-width: 62ch; }
-.about-body p { color: var(--text-2); font-size: 1.125rem; }
+.about-body { display: grid; gap: 1.1rem; max-width: 64ch; }
+.about-body p { color: var(--text-2); }
 
 /* ---------- Projects ---------- */
 
@@ -263,7 +327,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
 
 .project-grid { display: grid; gap: 1.75rem; }
 
-.project h3 { font-size: clamp(1.375rem, 2.6vw, 1.75rem); font-weight: 700; margin-bottom: 0.5rem; }
+.project h3 { font-size: clamp(1.1875rem, 2vw, 1.4375rem); font-weight: 700; margin-bottom: 0.5rem; }
 
 /* Every project opens with the role, before anything else */
 .role {
@@ -460,4 +524,9 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   }
   .hero::before, .hero::after { opacity: 1; }
   .btn:hover { transform: none; }
+
+  /* Diagram holds a single readable frame instead of looping */
+  .dg-car-l { y: 82px; opacity: 1; }
+  .dg-car-r { opacity: 0; }
+  .dg-led-l { fill: #FF3B30; }
 }
