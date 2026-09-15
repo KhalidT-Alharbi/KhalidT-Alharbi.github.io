@@ -1,0 +1,18 @@
+# Khalid Alharbi
+
+> Electrical and computer engineering student at King Abdulaziz University (Jeddah, Saudi Arabia), working toward AI software engineering. Completed the KAUST Academy AI Specialization (Nov 2025 to Feb 2026).
+
+This site is a single page: https://khalidt-alharbi.github.io/
+
+## Projects
+
+- OnKith (KAUST Academy, team of six, 2026): privacy-first voice assistant on a Raspberry Pi 5 that masks personal information on-device. Khalid's role: training data. He built a Saudi and MENA entity generator after the PII detector kept missing Saudi names, and assembled and published the 284,619-row training corpus. Repository: https://github.com/YahyaAlsharif/OnKith . Dataset: https://huggingface.co/datasets/KhalidAlharbi377/pii-detection-multisource-en-saudi-arabic
+- HI-BSDS (KAU engineering design, team of six, 2026): helmet-mounted blind spot warning system for motorcycle riders using ESP32 boards, 24 GHz mmWave radar and time-of-flight LiDAR. Khalid's role: firmware for all three boards.
+- Temperature-controlled cooling system (KAU, 2025): Peltier-module cooling for enclosed spaces. Khalid's role: hardware and control logic lead.
+
+## Contact
+
+- Email: Kh.alharbi32@gmail.com
+- GitHub: https://github.com/KhalidT-Alharbi
+- LinkedIn: https://www.linkedin.com/in/engineer-khalid-alharbi/
+- Hugging Face: https://huggingface.co/KhalidAlharbi377

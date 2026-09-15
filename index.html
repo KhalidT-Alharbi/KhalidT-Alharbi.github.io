@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Khalid Alharbi · Working toward AI software engineering</title>
+  <meta name="description" content="Electrical and computer engineering student at King Abdulaziz University. Projects in on-device privacy AI and ESP32 sensor firmware.">
+  <link rel="canonical" href="https://khalidt-alharbi.github.io/">
+  <meta name="theme-color" content="#07120E">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Khalid Alharbi">
+  <meta property="og:title" content="Khalid Alharbi · Working toward AI software engineering">
+  <meta property="og:description" content="Electrical and computer engineering student at King Abdulaziz University. Projects in on-device privacy AI and ESP32 sensor firmware.">
+  <meta property="og:url" content="https://khalidt-alharbi.github.io/">
+  <meta property="og:image" content="https://khalidt-alharbi.github.io/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Khalid Alharbi · Working toward AI software engineering">
+  <meta name="twitter:description" content="Electrical and computer engineering student at King Abdulaziz University. Projects in on-device privacy AI and ESP32 sensor firmware.">
+  <meta name="twitter:image" content="https://khalidt-alharbi.github.io/og.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="styles.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Khalid Alharbi",
+    "url": "https://khalidt-alharbi.github.io/",
+    "description": "Electrical and computer engineering student working toward AI software engineering.",
+    "affiliation": { "@type": "CollegeOrUniversity", "name": "King Abdulaziz University" },
+    "sameAs": [
+      "https://github.com/KhalidT-Alharbi",
+      "https://www.linkedin.com/in/engineer-khalid-alharbi/",
+      "https://huggingface.co/KhalidAlharbi377"
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ================= HEADER ================= -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top">Khalid Alharbi</a>
+      <nav aria-label="Primary">
+        <ul class="pill-nav">
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#education">Education</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="header-link" href="https://github.com/KhalidT-Alharbi">GitHub</a>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top" aria-labelledby="hero-name">
+      <div class="container hero-content">
+        <h1 id="hero-name">Khalid<br>Alharbi</h1>
+        <p class="identity">Electrical and computer engineering student. Working toward AI software engineering.</p>
+        <p class="hero-sub">My projects so far sit between machine learning and embedded hardware: training data for an on-device privacy model, and firmware for a three-board helmet safety system.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#projects">See my projects</a>
+          <a class="btn btn-secondary" href="https://github.com/KhalidT-Alharbi">GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <h2 id="about-title">About</h2>
+        <div class="about-body">
+          <p>I study electrical and computer engineering at King Abdulaziz University in Jeddah, with two years and a six-month co-op still ahead.</p>
+          <p>In early 2026 I completed the KAUST Academy AI specialization, covering deep learning, computer vision, NLP and generative AI in PyTorch. I am working toward AI software engineering in industry.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROJECTS =================
+         To add a project: copy one <article class="project"> block and edit it.
+         Keep the role line first; it says what YOU did before anything else. -->
+    <section class="section" id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <h2 id="projects-title">Projects</h2>
+
+        <div class="projects">
+
+          <!-- OnKith -->
+          <article class="project">
+            <h3>OnKith</h3>
+            <p class="role">Training data · Team of six · KAUST Academy · 2026</p>
+            <p class="summary">A privacy-first voice assistant that runs on a Raspberry Pi 5 and masks personal information before anything leaves the device.</p>
+            <ul class="tags" aria-label="Technologies">
+              <li>Python</li>
+              <li>NLP</li>
+              <li>PII detection</li>
+              <li>Hugging Face</li>
+            </ul>
+            <div class="links">
+              <a href="https://github.com/YahyaAlsharif/OnKith">Repository ↗</a>
+              <a href="https://huggingface.co/datasets/KhalidAlharbi377/pii-detection-multisource-en-saudi-arabic">Dataset on Hugging Face ↗</a>
+            </div>
+            <details class="details">
+              <summary>Details <span class="plus" aria-hidden="true"></span></summary>
+              <div class="details-body">
+                <p>The PII detector kept missing Saudi names. The team agreed it needed Saudi data, and I built it: a generator that draws on official Saudi sources, with correct SAMA IBAN and 15-digit ZATCA VAT formats, plus extra rows for the entity types the detector scored worst on.</p>
+                <p>I then assembled and published the full 284,619-row training corpus. The detector trained on it reaches 0.84 private-character recall on a frozen out-of-distribution test set.</p>
+              </div>
+            </details>
+          </article>
+
+          <!-- HI-BSDS -->
+          <article class="project">
+            <div class="project-grid has-media">
+              <div>
+                <h3>HI-BSDS</h3>
+                <p class="role">Firmware · Team of six · KAU engineering design · 2026</p>
+                <p class="summary">A helmet-mounted blind spot warning system for motorcycle riders, built so the protection moves with the rider instead of being wired into one bike.</p>
+                <ul class="tags" aria-label="Technologies">
+                  <li>C++</li>
+                  <li>ESP32</li>
+                  <li>mmWave radar</li>
+                  <li>LiDAR</li>
+                </ul>
+                <details class="details">
+                  <summary>Details <span class="plus" aria-hidden="true"></span></summary>
+                  <div class="details-body">
+                    <p>Each side of the helmet has its own ESP32 pod reading a 24 GHz mmWave radar and an 8x8 time-of-flight LiDAR. An alert only fires when the radar confirms the target is moving, and the in-helmet LEDs turn yellow inside 4 m, orange inside 2.5 m and red inside 1.2 m.</p>
+                    <p>A third board, an ESP32-S3, streams the camera over its own Wi-Fi network with each side's threat level overlaid on the video. I wrote the firmware for all three boards.</p>
+                  </div>
+                </details>
+              </div>
+              <figure class="frame">
+                <div class="frame-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+                <picture>
+                  <source srcset="assets/hi-bsds-electronics.webp" type="image/webp">
+                  <img src="assets/hi-bsds-electronics.jpg" width="496" height="395" loading="lazy" decoding="async"
+                       alt="Top-down view of the HI-BSDS electronics enclosure: three microcontroller boards wired to the side sensors and a camera.">
+                </picture>
+                <figcaption>Pod, hub and pod, inside the 3D-printed enclosure</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <!-- Cooling system -->
+          <article class="project">
+            <h3>Temperature-controlled cooling system</h3>
+            <p class="role">Hardware and control logic lead · KAU · 2025</p>
+            <p class="summary">A Peltier-module cooling system for enclosed spaces that responds automatically to temperature readings. I designed and built the circuit and the control logic.</p>
+            <ul class="tags" aria-label="Technologies">
+              <li>Peltier module</li>
+              <li>Microcontroller</li>
+              <li>Sensors</li>
+            </ul>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EDUCATION ================= -->
+    <section class="section" id="education" aria-labelledby="education-title">
+      <div class="container">
+        <h2 id="education-title">Education</h2>
+        <ul class="edu">
+          <li>
+            <div>
+              <h3>King Abdulaziz University</h3>
+              <p class="what">B.S. Electrical and Computer Engineering</p>
+              <p class="note">GPA 4.63 / 5.00</p>
+            </div>
+            <p class="when">2023 to present</p>
+          </li>
+          <li>
+            <div>
+              <h3>KAUST Academy</h3>
+              <p class="what">Artificial Intelligence Specialization</p>
+              <p class="note">Machine learning, deep learning, computer vision, NLP, generative AI and reinforcement learning, in PyTorch.</p>
+            </div>
+            <p class="when">Nov 2025 to Feb 2026</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT ================= -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="container">
+        <h2 id="contact-title">Contact</h2>
+        <p class="contact-lead">Email is the fastest way to reach me.</p>
+        <a class="email" href="mailto:Kh.alharbi32@gmail.com">Kh.alharbi32@gmail.com</a>
+        <div class="links">
+          <a href="https://github.com/KhalidT-Alharbi">GitHub ↗</a>
+          <a href="https://www.linkedin.com/in/engineer-khalid-alharbi/">LinkedIn ↗</a>
+          <a href="https://huggingface.co/KhalidAlharbi377">Hugging Face ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">© 2026 Khalid Alharbi</div>
+  </footer>
+</body>
+</html>
