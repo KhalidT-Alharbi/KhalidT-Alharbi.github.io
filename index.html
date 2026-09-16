@@ -29,6 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;700&family=JetBrains+Mono:wght@500&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
 
   <script type="application/ld+json">
   {
@@ -80,37 +81,94 @@
           </div>
         </div>
 
-        <!-- Hero diagram: HI-BSDS alert logic, drawn from the firmware's own thresholds -->
-        <figure class="hero-figure">
-          <svg viewBox="0 0 520 300" role="img" aria-labelledby="dg-title dg-desc">
-            <title id="dg-title">How the helmet decides to warn the rider</title>
-            <desc id="dg-desc">A top-down diagram. A vehicle approaches from behind on one side, and the in-helmet LED on that side changes from off to yellow, orange, then red as the vehicle crosses the four metre, two and a half metre, and one point two metre thresholds.</desc>
+        <!-- ============ HERO SHOWCASE: swipeable project demos ============
+             Swipe, use the arrows, or pick a tab. Each slide is a <figure>;
+             to add a demo, copy a slide and add a matching tab. -->
+        <div class="hero-figure showcase" data-showcase role="region" aria-roledescription="carousel" aria-label="Project demos">
 
-            <!-- lane separators -->
-            <line class="dg-lane" x1="190" y1="16" x2="190" y2="292"></line>
-            <line class="dg-lane" x1="330" y1="16" x2="330" y2="292"></line>
+          <div class="showcase-controls">
+            <div class="tabs" aria-label="Choose a demo">
+              <button type="button" class="tab" data-slide="0" aria-controls="demo-hi-bsds" aria-current="true">HI-BSDS</button>
+              <button type="button" class="tab" data-slide="1" aria-controls="demo-onkith" aria-current="false">OnKith</button>
+            </div>
+            <div class="arrows">
+              <button type="button" class="arrow" data-step="-1" aria-label="Previous demo">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button type="button" class="arrow" data-step="1" aria-label="Next demo">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
 
-            <!-- distance thresholds -->
-            <line class="dg-mark" x1="40" y1="250" x2="480" y2="250"></line>
-            <text class="dg-label" x="40" y="243">4.0 m</text>
-            <line class="dg-mark" x1="40" y1="180" x2="480" y2="180"></line>
-            <text class="dg-label" x="40" y="173">2.5 m</text>
-            <line class="dg-mark" x1="40" y1="110" x2="480" y2="110"></line>
-            <text class="dg-label" x="40" y="103">1.2 m</text>
+          <div class="showcase-track" tabindex="0" aria-label="Demos, use left and right arrow keys">
 
-            <!-- approaching vehicles -->
-            <rect class="dg-car dg-car-l" x="100" y="250" width="40" height="64" rx="5"></rect>
-            <rect class="dg-car dg-car-r" x="380" y="250" width="40" height="64" rx="5"></rect>
+            <!-- Slide 1: HI-BSDS alert logic, drawn from the firmware's own thresholds -->
+            <figure class="slide" id="demo-hi-bsds" aria-roledescription="slide" aria-label="1 of 2: HI-BSDS">
+              <div class="panel">
+                <svg viewBox="0 0 520 300" role="img" aria-labelledby="dg-title dg-desc">
+                  <title id="dg-title">How the helmet decides to warn the rider</title>
+                  <desc id="dg-desc">A top-down diagram of a rider's helmet. A vehicle approaches from behind on one side, and the LED strip inside the helmet on that side changes from off to yellow, orange, then red as the vehicle crosses the four metre, two and a half metre, and one point two metre thresholds.</desc>
+                  <defs>
+                    <filter id="dg-glow" x="-300%" y="-60%" width="700%" height="220%">
+                      <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+                    </filter>
+                  </defs>
 
-            <!-- rider: helmet with an LED strip on each side -->
-            <rect class="dg-led dg-led-l" x="222" y="44" width="9" height="32" rx="4"></rect>
-            <rect class="dg-led dg-led-r" x="289" y="44" width="9" height="32" rx="4"></rect>
-            <circle class="dg-helmet" cx="260" cy="60" r="26"></circle>
-            <path class="dg-visor" d="M245 54a17 17 0 0 1 30 0"></path>
-            <text class="dg-label" x="260" y="104" text-anchor="middle">rider</text>
-          </svg>
-          <figcaption>HI-BSDS alert logic. The in-helmet LEDs turn yellow inside 4 m, orange inside 2.5 m and red inside 1.2 m, and only when the radar confirms the vehicle is moving.</figcaption>
-        </figure>
+                  <!-- lane separators -->
+                  <line class="dg-lane" x1="190" y1="16" x2="190" y2="292"></line>
+                  <line class="dg-lane" x1="330" y1="16" x2="330" y2="292"></line>
+
+                  <!-- distance thresholds, measured behind the rider -->
+                  <line class="dg-mark" x1="40" y1="250" x2="480" y2="250"></line>
+                  <text class="dg-label" x="40" y="243">4.0 m</text>
+                  <line class="dg-mark" x1="40" y1="180" x2="480" y2="180"></line>
+                  <text class="dg-label" x="40" y="173">2.5 m</text>
+                  <line class="dg-mark" x1="40" y1="110" x2="480" y2="110"></line>
+                  <text class="dg-label" x="40" y="103">1.2 m</text>
+
+                  <!-- vehicles approaching from behind: body plus windscreen -->
+                  <rect class="dg-car dg-car-l" x="100" y="250" width="40" height="64" rx="6"></rect>
+                  <rect class="dg-ws dg-ws-l" x="106" y="262" width="28" height="14" rx="3"></rect>
+                  <rect class="dg-car dg-car-r" x="380" y="250" width="40" height="64" rx="6"></rect>
+                  <rect class="dg-ws dg-ws-r" x="386" y="262" width="28" height="14" rx="3"></rect>
+
+                  <!-- rider's helmet, seen from above, front facing up -->
+                  <rect class="dg-led dg-led-l" x="226" y="34" width="8" height="30" rx="4" filter="url(#dg-glow)"></rect>
+                  <rect class="dg-led dg-led-r" x="286" y="34" width="8" height="30" rx="4" filter="url(#dg-glow)"></rect>
+                  <path class="dg-shell" d="M260 18C279 18 292 32 293 52C294 76 283 96 260 96C237 96 226 76 227 52C228 32 241 18 260 18Z"></path>
+                  <path class="dg-stripe" d="M256 40H264L266 94H254Z"></path>
+                  <path class="dg-visor" d="M240 36C248 26 272 26 280 36L277 45C269 38 251 38 243 45Z"></path>
+                  <rect class="dg-vent" x="252" y="80" width="16" height="4" rx="2"></rect>
+                  <rect class="dg-led dg-led-l" x="229" y="36" width="6" height="26" rx="3"></rect>
+                  <rect class="dg-led dg-led-r" x="285" y="36" width="6" height="26" rx="3"></rect>
+                  <text class="dg-label" x="304" y="84">rider</text>
+                </svg>
+              </div>
+              <figcaption>HI-BSDS alert logic. The LEDs inside the helmet turn yellow inside 4 m, orange inside 2.5 m and red inside 1.2 m, and only when the radar confirms the vehicle is moving.</figcaption>
+            </figure>
+
+            <!-- Slide 2: OnKith masking, illustrated. All names and numbers are invented. -->
+            <figure class="slide" id="demo-onkith" aria-roledescription="slide" aria-label="2 of 2: OnKith">
+              <div class="panel scan" data-scan data-phase="listening">
+                <div class="scan-head">
+                  <span class="scan-status" aria-hidden="true">listening</span>
+                  <span class="pill-note">illustration</span>
+                </div>
+                <div class="scan-body">
+                  <ul class="scan-text">
+                    <li>“Remind <span class="pii"><span class="pii-raw">Noura</span><span class="pii-mask" aria-hidden="true">[GIVENNAME]</span></span> <span class="pii"><span class="pii-raw">Alharthi</span><span class="pii-mask" aria-hidden="true">[SURNAME]</span></span> to call me on <span class="pii"><span class="pii-raw">050 000 0000</span><span class="pii-mask" aria-hidden="true">[TELEPHONENUM]</span></span> when she lands in <span class="pii"><span class="pii-raw">Jeddah</span><span class="pii-mask" aria-hidden="true">[CITY]</span></span>.”</li>
+                    <li>“Send the rent to <span class="pii"><span class="pii-raw">Faisal</span><span class="pii-mask" aria-hidden="true">[GIVENNAME]</span></span> <span class="pii"><span class="pii-raw">Alqahtani</span><span class="pii-mask" aria-hidden="true">[SURNAME]</span></span>, IBAN <span class="pii"><span class="pii-raw">SA03 8000 0000 6080 1016 7519</span><span class="pii-mask" aria-hidden="true">[ACCOUNTNUM]</span></span>.”</li>
+                    <li>“Email the lease to <span class="pii"><span class="pii-raw">faisal@example.com</span><span class="pii-mask" aria-hidden="true">[EMAIL]</span></span>.”</li>
+                  </ul>
+                  <div class="scan-line" aria-hidden="true"></div>
+                </div>
+              </div>
+              <figcaption>OnKith, illustrated. Personal information is found on the device and replaced with entity labels before any text reaches a language model. Saudi names like these are what the detector used to miss.</figcaption>
+            </figure>
+
+          </div>
+        </div>
       </div>
     </section>
 

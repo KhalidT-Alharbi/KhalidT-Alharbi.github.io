@@ -242,36 +242,122 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
    A small schematic of how HI-BSDS decides, using its real thresholds.
    Pure SVG and CSS: no video file, no JavaScript, a few KB. */
 
-.hero-figure { position: relative; z-index: 1; margin: 0; }
+.hero-figure { position: relative; z-index: 1; min-width: 0; }
 
-.hero-figure svg {
-  width: 100%;
-  height: auto;
-  display: block;
-  background: rgba(5, 13, 10, 0.55);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
+/* Slider: native horizontal scrolling with snap points, so swiping works
+   without JavaScript. script.js only adds the tabs, arrows and keys. */
+.showcase-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
 }
 
-.hero-figure figcaption {
+.tabs {
+  display: flex;
+  gap: 0.125rem;
+  padding: 0.25rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(236, 242, 238, 0.04);
+}
+
+.tab {
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-2);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: color 0.16s ease, background-color 0.16s ease;
+}
+.tab:hover { color: var(--text); }
+.tab[aria-current="true"] { background: var(--accent-soft); color: var(--accent); }
+
+.arrows { display: flex; gap: 0.5rem; }
+
+.arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.22s var(--ease-spring), border-color 0.16s ease, background-color 0.16s ease;
+}
+.arrow:hover { border-color: var(--text-3); background: rgba(236, 242, 238, 0.06); }
+.arrow:active { transform: scale(0.92); }
+.arrow svg { width: 16px; height: 16px; }
+
+.showcase-track {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  border-radius: var(--radius);
+}
+.showcase-track::-webkit-scrollbar { display: none; }
+
+.slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  margin: 0;
+  scroll-snap-align: start;
+  scroll-margin-top: calc(var(--header-h) + 5rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(5, 13, 10, 0.6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.panel > svg { width: 100%; height: auto; display: block; }
+
+.slide figcaption {
   margin-top: 0.85rem;
+  min-height: 6.4em;
   font-size: 0.8125rem;
   line-height: 1.55;
   color: var(--text-3);
-  max-width: 46ch;
+  max-width: 48ch;
 }
 
+/* HI-BSDS diagram */
 .dg-label { font-family: var(--font-mono); font-size: 11px; fill: #6F8378; }
 .dg-lane { fill: none; stroke: rgba(236, 242, 238, 0.09); stroke-width: 1; }
 .dg-mark { stroke: rgba(236, 242, 238, 0.16); stroke-width: 1; stroke-dasharray: 3 5; }
-.dg-helmet { fill: #17291F; stroke: var(--line-strong); stroke-width: 1.5; }
-.dg-visor { fill: none; stroke: #6F8378; stroke-width: 2; stroke-linecap: round; }
+.dg-shell { fill: #1A2C22; stroke: rgba(236, 242, 238, 0.28); stroke-width: 1.5; }
+.dg-stripe { fill: rgba(236, 242, 238, 0.12); }
+.dg-visor { fill: #040A07; stroke: rgba(236, 242, 238, 0.22); stroke-width: 1; }
+.dg-vent { fill: rgba(236, 242, 238, 0.16); }
 
-.dg-car { fill: #8FA197; rx: 3; }
+.dg-car { fill: #8FA197; }
+.dg-ws  { fill: #3B4D44; }
 /* `backwards` holds the 0% frame during the delay, so the second car
    stays hidden until its turn instead of parking on the start line. */
 .dg-car-l { animation: dg-approach 9s linear infinite backwards; }
 .dg-car-r { animation: dg-approach 9s linear infinite 4.5s backwards; }
+.dg-ws-l  { animation: dg-approach-ws 9s linear infinite backwards; }
+.dg-ws-r  { animation: dg-approach-ws 9s linear infinite 4.5s backwards; }
 
 .dg-led { fill: #22332A; }
 .dg-led-l { animation: dg-led 9s linear infinite; }
@@ -287,12 +373,131 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   100% { y: 50px;  opacity: 0; }
 }
 
+/* Windscreen rides 12 units below the front of its car */
+@keyframes dg-approach-ws {
+  0%   { y: 262px; opacity: 0; }
+  5%   { y: 254px; opacity: 1; }
+  44%  { y: 94px;  opacity: 1; }
+  50%  { y: 62px;  opacity: 0; }
+  100% { y: 62px;  opacity: 0; }
+}
+
 @keyframes dg-led {
   0%,  7%   { fill: #22332A; }
   13%, 22%  { fill: #FFC400; }
   27%, 33%  { fill: #FF7A00; }
   38%, 46%  { fill: #FF3B30; }
   50%, 100% { fill: #22332A; }
+}
+
+/* OnKith scanner illustration (driven by script.js) */
+.scan {
+  justify-content: flex-start;
+  gap: 1.1rem;
+  padding: clamp(1.1rem, 2.5vw, 1.6rem);
+}
+
+.scan-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+
+.scan-status { display: inline-flex; align-items: center; gap: 0.5rem; transition: color 0.2s ease; }
+.scan-status::before {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+.scan[data-phase="detect"] .scan-status,
+.scan[data-phase="found"] .scan-status { color: #FF6B61; }
+.scan[data-phase="mask"] .scan-status { color: var(--accent); }
+.scan[data-phase="safe"] .scan-status { color: #7FD6A4; }
+
+.pill-note {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+}
+
+.scan-body { position: relative; }
+
+.scan-text {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: clamp(0.9375rem, 1.5vw, 1.0625rem);
+  line-height: 1.95;
+}
+
+/* Words sit inline, so the sentence reflows naturally as each one is masked */
+.pii {
+  /* The negative margin cancels most of the padding, so words do not
+     look spaced out before they are highlighted */
+  padding: 0.1em 0.18em;
+  margin: 0 -0.03em;
+  border-radius: 5px;
+  white-space: nowrap;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.pii-mask {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: 0.78em;
+  color: var(--accent);
+}
+
+.pii.is-found {
+  color: #FFDAD7;
+  background: rgba(255, 59, 48, 0.16);
+  box-shadow: 0 0 0 1px rgba(255, 59, 48, 0.55), 0 0 18px rgba(255, 59, 48, 0.35);
+  animation: found-in 0.3s ease;
+}
+
+@keyframes found-in {
+  from { background: transparent; box-shadow: 0 0 0 1px transparent, 0 0 0 transparent; color: inherit; }
+}
+.pii.is-masked {
+  background: var(--accent-soft);
+  box-shadow: 0 0 0 1px var(--accent-line);
+}
+.pii.is-masked .pii-raw  { display: none; }
+.pii.is-masked .pii-mask { display: inline; animation: mask-in 0.2s ease; }
+
+@keyframes mask-in { from { opacity: 0; } }
+
+/* The sweeping line is a CSS animation, restarted by script.js each loop.
+   Its timing must match the constants in script.js:
+   detect sweep 0 to 3.5 s, mask sweep 4.2 to 7.2 s, in a 10 s loop. */
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: -0.5rem;
+  right: -0.5rem;
+  height: 2px;
+  border-radius: 2px;
+  opacity: 0;
+  pointer-events: none;
+}
+.scan-line.is-running { animation: scan-sweep 10s linear 1 forwards; }
+
+@keyframes scan-sweep {
+  0%     { top: 0%;   opacity: 1; background: #FF3B30;       box-shadow: 0 0 14px 3px rgba(255, 59, 48, 0.55); }
+  35%    { top: 100%; opacity: 1; background: #FF3B30;       box-shadow: 0 0 14px 3px rgba(255, 59, 48, 0.55); }
+  35.1%  { top: 100%; opacity: 0; background: var(--accent); box-shadow: 0 0 14px 3px rgba(224, 145, 90, 0.55); }
+  41.9%  { top: 0%;   opacity: 0; background: var(--accent); box-shadow: 0 0 14px 3px rgba(224, 145, 90, 0.55); }
+  42%    { top: 0%;   opacity: 1; background: var(--accent); box-shadow: 0 0 14px 3px rgba(224, 145, 90, 0.55); }
+  72%    { top: 100%; opacity: 1; background: var(--accent); box-shadow: 0 0 14px 3px rgba(224, 145, 90, 0.55); }
+  72.1%, 100% { top: 100%; opacity: 0; background: var(--accent); box-shadow: none; }
 }
 
 /* ---------- Sections ---------- */
@@ -527,6 +732,8 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
 
   /* Diagram holds a single readable frame instead of looping */
   .dg-car-l { y: 82px; opacity: 1; }
-  .dg-car-r { opacity: 0; }
+  .dg-ws-l  { y: 94px; opacity: 1; }
+  .dg-car-r, .dg-ws-r { opacity: 0; }
   .dg-led-l { fill: #FF3B30; }
+  .showcase-track { scroll-behavior: auto; }
 }
