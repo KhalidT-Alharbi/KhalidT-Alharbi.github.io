@@ -81,32 +81,30 @@
           </div>
         </div>
 
-        <!-- ============ HERO SHOWCASE: swipeable project demos ============
-             Swipe, use the arrows, or pick a tab. Each slide is a <figure>;
+        <!-- ============ HERO SHOWCASE: auto-advancing project demos ============
+             Advances on its own; hovering holds the current slide. Swipe or pick
+             a tab to switch. Each slide is a <figure> with data-duration in ms;
              to add a demo, copy a slide and add a matching tab. -->
         <div class="hero-figure showcase" data-showcase role="region" aria-roledescription="carousel" aria-label="Project demos">
 
           <div class="showcase-controls">
             <div class="tabs" aria-label="Choose a demo">
+              <span class="tab-thumb" aria-hidden="true"><span class="tab-progress"></span></span>
               <button type="button" class="tab" data-slide="0" aria-controls="demo-hi-bsds" aria-current="true">HI-BSDS</button>
               <button type="button" class="tab" data-slide="1" aria-controls="demo-onkith" aria-current="false">OnKith</button>
             </div>
-            <div class="arrows">
-              <button type="button" class="arrow" data-step="-1" aria-label="Previous demo">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-              <button type="button" class="arrow" data-step="1" aria-label="Next demo">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </button>
-            </div>
+            <button type="button" class="play-toggle" aria-pressed="false" aria-label="Pause the demos">
+              <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 3.5v9M10.5 3.5v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.2 3.2v9.6L12.6 8z" fill="currentColor"/></svg>
+            </button>
           </div>
 
           <div class="showcase-track" tabindex="0" aria-label="Demos, use left and right arrow keys">
 
             <!-- Slide 1: HI-BSDS alert logic, drawn from the firmware's own thresholds -->
-            <figure class="slide" id="demo-hi-bsds" aria-roledescription="slide" aria-label="1 of 2: HI-BSDS">
+            <figure class="slide" id="demo-hi-bsds" data-duration="9000" aria-roledescription="slide" aria-label="1 of 2: HI-BSDS">
               <div class="panel">
-                <svg viewBox="0 0 520 300" role="img" aria-labelledby="dg-title dg-desc">
+                <svg class="is-live" viewBox="0 0 520 300" role="img" aria-labelledby="dg-title dg-desc">
                   <title id="dg-title">How the helmet decides to warn the rider</title>
                   <desc id="dg-desc">A top-down diagram of a rider's helmet. A vehicle approaches from behind on one side, and the LED strip inside the helmet on that side changes from off to yellow, orange, then red as the vehicle crosses the four metre, two and a half metre, and one point two metre thresholds.</desc>
                   <defs>
@@ -149,7 +147,7 @@
             </figure>
 
             <!-- Slide 2: OnKith masking, illustrated. All names and numbers are invented. -->
-            <figure class="slide" id="demo-onkith" aria-roledescription="slide" aria-label="2 of 2: OnKith">
+            <figure class="slide" id="demo-onkith" data-duration="10000" aria-roledescription="slide" aria-label="2 of 2: OnKith">
               <div class="panel scan" data-scan data-phase="listening">
                 <div class="scan-head">
                   <span class="scan-status" aria-hidden="true">listening</span>

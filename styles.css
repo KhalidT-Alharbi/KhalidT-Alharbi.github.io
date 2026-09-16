@@ -28,6 +28,7 @@
 
   /* Motion: short transitions only */
   --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -192,7 +193,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
 .hero-content { position: relative; z-index: 1; }
 
 .hero h1 {
-  font-size: clamp(2.5rem, 6.5vw, 4.25rem);
+  font-size: clamp(2rem, 4.6vw, 3.25rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
@@ -254,48 +255,89 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   margin-bottom: 0.85rem;
 }
 
+/* Segmented tabs: a copper thumb glides under the active tab, and the thin
+   line inside it fills until the next slide. script.js sets its position. */
 .tabs {
-  display: flex;
-  gap: 0.125rem;
-  padding: 0.25rem;
+  position: relative;
+  display: inline-flex;
+  padding: 4px;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(236, 242, 238, 0.04);
+  background: rgba(236, 242, 238, 0.035);
+  box-shadow: inset 0 1px 0 rgba(236, 242, 238, 0.04);
 }
 
+.tab-thumb {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 0;
+  border-radius: 999px;
+  overflow: hidden;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(224, 145, 90, 0.24), rgba(224, 145, 90, 0.12));
+  box-shadow: inset 0 0 0 1px rgba(224, 145, 90, 0.38), 0 8px 22px -10px rgba(224, 145, 90, 0.6);
+}
+.tabs.is-ready .tab-thumb {
+  transition: transform 0.55s var(--ease-out), width 0.55s var(--ease-out);
+}
+
+.tab-progress {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 6px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  /* script.js steps this every 100 ms; the linear easing joins the steps up */
+  transition: transform 0.1s linear, opacity 0.3s ease;
+}
+
+/* While the slide is held (hover or pause), the line dims so it reads as paused */
+.showcase:hover .tab-progress,
+.showcase.is-paused .tab-progress { opacity: 0.45; }
+
 .tab {
+  position: relative;
+  z-index: 1;
   min-height: 44px;
-  padding: 0 1rem;
+  padding: 0 1.15rem;
   border: 0;
   border-radius: 999px;
   background: transparent;
-  color: var(--text-2);
+  color: var(--text-3);
   font: inherit;
   font-size: 0.8125rem;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  transition: color 0.16s ease, background-color 0.16s ease;
+  transition: color 0.35s ease;
 }
-.tab:hover { color: var(--text); }
-.tab[aria-current="true"] { background: var(--accent-soft); color: var(--accent); }
+.tab:hover { color: var(--text-2); }
+.tab[aria-current="true"] { color: var(--text); }
 
-.arrows { display: flex; gap: 0.5rem; }
-
-.arrow {
+.play-toggle {
   display: grid;
   place-items: center;
   width: 44px;
   height: 44px;
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--line);
   border-radius: 999px;
-  background: transparent;
-  color: var(--text);
+  background: rgba(236, 242, 238, 0.035);
+  color: var(--text-2);
   cursor: pointer;
-  transition: transform 0.22s var(--ease-spring), border-color 0.16s ease, background-color 0.16s ease;
+  transition: transform 0.22s var(--ease-spring), color 0.2s ease, border-color 0.2s ease;
 }
-.arrow:hover { border-color: var(--text-3); background: rgba(236, 242, 238, 0.06); }
-.arrow:active { transform: scale(0.92); }
-.arrow svg { width: 16px; height: 16px; }
+.play-toggle:hover { color: var(--text); border-color: var(--line-strong); }
+.play-toggle:active { transform: scale(0.92); }
+.play-toggle svg { width: 14px; height: 14px; }
+.play-toggle .icon-play { display: none; }
+.play-toggle[aria-pressed="true"] .icon-pause { display: none; }
+.play-toggle[aria-pressed="true"] .icon-play { display: block; color: var(--accent); }
 
 .showcase-track {
   position: relative;
@@ -325,12 +367,20 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: rgba(5, 13, 10, 0.6);
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(224, 145, 90, 0.08), transparent 62%),
+    linear-gradient(180deg, #0B1812, #060F0B);
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 30px 60px -36px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(236, 242, 238, 0.05);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out), border-color 0.4s ease;
 }
 .panel > svg { width: 100%; height: auto; display: block; }
+
+/* The slide on its way out dims and eases back slightly */
+.slide[aria-hidden="true"] .panel { opacity: 0.35; transform: scale(0.96); }
+.showcase:hover .panel { border-color: rgba(224, 145, 90, 0.26); }
 
 .slide figcaption {
   margin-top: 0.85rem;
@@ -339,7 +389,9 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   line-height: 1.55;
   color: var(--text-3);
   max-width: 48ch;
+  transition: opacity 0.6s ease;
 }
+.slide[aria-hidden="true"] figcaption { opacity: 0; }
 
 /* HI-BSDS diagram */
 .dg-label { font-family: var(--font-mono); font-size: 11px; fill: #6F8378; }
@@ -354,14 +406,16 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
 .dg-ws  { fill: #3B4D44; }
 /* `backwards` holds the 0% frame during the delay, so the second car
    stays hidden until its turn instead of parking on the start line. */
-.dg-car-l { animation: dg-approach 9s linear infinite backwards; }
-.dg-car-r { animation: dg-approach 9s linear infinite 4.5s backwards; }
-.dg-ws-l  { animation: dg-approach-ws 9s linear infinite backwards; }
-.dg-ws-r  { animation: dg-approach-ws 9s linear infinite 4.5s backwards; }
+/* Scoped under .is-live so script.js can restart the loop from the top
+   each time this slide comes round. */
+.is-live .dg-car-l { animation: dg-approach 9s linear infinite backwards; }
+.is-live .dg-car-r { animation: dg-approach 9s linear infinite 4.5s backwards; }
+.is-live .dg-ws-l  { animation: dg-approach-ws 9s linear infinite backwards; }
+.is-live .dg-ws-r  { animation: dg-approach-ws 9s linear infinite 4.5s backwards; }
 
 .dg-led { fill: #22332A; }
-.dg-led-l { animation: dg-led 9s linear infinite; }
-.dg-led-r { animation: dg-led 9s linear infinite 4.5s; }
+.is-live .dg-led-l { animation: dg-led 9s linear infinite; }
+.is-live .dg-led-r { animation: dg-led 9s linear infinite 4.5s; }
 
 /* Animating the SVG geometry property `y` rather than a CSS transform:
    transforms on SVG rects are unreliable across engines. */
@@ -440,11 +494,11 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
 
 /* Words sit inline, so the sentence reflows naturally as each one is masked */
 .pii {
-  /* The negative margin cancels most of the padding, so words do not
-     look spaced out before they are highlighted */
-  padding: 0.1em 0.18em;
-  margin: 0 -0.03em;
-  border-radius: 5px;
+  /* No horizontal padding: the highlight's side padding is drawn with a
+     box-shadow spread instead, which takes no space in the line. So words
+     sit exactly where plain text would, with no stray gap before "." */
+  padding: 0.1em 0;
+  border-radius: 4px;
   white-space: nowrap;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
@@ -456,19 +510,20 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   color: var(--accent);
 }
 
+/* Lit the instant the red line crosses it; the line itself carries the motion */
 .pii.is-found {
   color: #FFDAD7;
   background: rgba(255, 59, 48, 0.16);
-  box-shadow: 0 0 0 1px rgba(255, 59, 48, 0.55), 0 0 18px rgba(255, 59, 48, 0.35);
-  animation: found-in 0.3s ease;
-}
-
-@keyframes found-in {
-  from { background: transparent; box-shadow: 0 0 0 1px transparent, 0 0 0 transparent; color: inherit; }
+  box-shadow:
+    0 0 0 0.07em rgba(255, 59, 48, 0.16),
+    0 0 0 calc(0.07em + 1px) rgba(255, 59, 48, 0.5),
+    0 0 16px rgba(255, 59, 48, 0.32);
 }
 .pii.is-masked {
   background: var(--accent-soft);
-  box-shadow: 0 0 0 1px var(--accent-line);
+  box-shadow:
+    0 0 0 0.07em var(--accent-soft),
+    0 0 0 calc(0.07em + 1px) var(--accent-line);
 }
 .pii.is-masked .pii-raw  { display: none; }
 .pii.is-masked .pii-mask { display: inline; animation: mask-in 0.2s ease; }

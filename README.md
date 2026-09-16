@@ -8,7 +8,7 @@ Personal portfolio of Khalid Alharbi. Plain HTML and CSS with one small script. 
 |---|---|
 | `index.html` | The whole site. Every section is marked with a comment. |
 | `styles.css` | All styling. Colours, fonts and spacing are tokens at the top. |
-| `script.js` | The hero demo slider and the OnKith masking animation. The site still works without it. |
+| `script.js` | The auto-advancing hero demo slider (pauses on hover) and the OnKith masking animation. The site still works without it. |
 | `404.html` | Shown for any address that does not exist. |
 | `assets/` | Images. |
 | `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png` | Browser tab and home screen icons. |
