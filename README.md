@@ -6,11 +6,13 @@ Personal portfolio of Khalid Alharbi. Plain HTML and CSS with one small script. 
 
 | File | What it is |
 |---|---|
-| `index.html` | The whole site. Every section is marked with a comment. |
+| `index.html` | The English page. Every section is marked with a comment. |
+| `ar/index.html` | The Arabic page (right to left). Keep it in step with `index.html`. |
 | `styles.css` | All styling. Colours, fonts and spacing are tokens at the top. |
 | `script.js` | The auto-advancing hero demo slider (pauses on hover) and the OnKith masking animation. The site still works without it. |
 | `404.html` | Shown for any address that does not exist. |
 | `assets/` | Images. |
+| `Khalid-Alharbi-CV.pdf` | Not added yet. The Download CV buttons on both pages point here. |
 | `favicon.svg`, `favicon-32.png`, `apple-touch-icon.png` | Browser tab and home screen icons. |
 | `og.png` | The preview image shown when the link is shared. |
 | `robots.txt`, `sitemap.xml`, `llms.txt` | Files for search engines and AI models. |
@@ -32,3 +34,8 @@ In `index.html`, copy one `<article class="project">` block inside the Projects 
 ## Change the look
 
 Edit the tokens in the `:root` block at the top of `styles.css`. Changing `--accent` recolours every button, role line and link underline at once.
+
+## Colour themes
+
+Green is the default. Add `?theme=blue` to the address to preview the blue version (it carries over when you switch language). Both themes are sets of tokens at the top of `styles.css`; to keep blue permanently, copy its values into `:root`.
+

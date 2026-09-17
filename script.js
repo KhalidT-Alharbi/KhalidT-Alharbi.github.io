@@ -8,6 +8,16 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+  /* ---------- 0. Colour preview ----------
+     While previewing ?theme=blue, keep it when switching language. */
+  if (document.documentElement.dataset.theme === 'blue') {
+    document.querySelectorAll('.lang a').forEach((link) => {
+      const url = new URL(link.getAttribute('href'), window.location.href);
+      url.searchParams.set('theme', 'blue');
+      link.href = url.href;
+    });
+  }
+
   /* ---------- 1. Showcase slider ---------- */
 
   const showcase = document.querySelector('[data-showcase]');
@@ -139,7 +149,8 @@
       toggle.addEventListener('click', () => {
         const paused = toggle.getAttribute('aria-pressed') !== 'true';
         toggle.setAttribute('aria-pressed', String(paused));
-        toggle.setAttribute('aria-label', paused ? 'Play the demos' : 'Pause the demos');
+        // Labels live on the button so each language page supplies its own.
+        toggle.setAttribute('aria-label', paused ? toggle.dataset.labelPlay : toggle.dataset.labelPause);
         showcase.classList.toggle('is-paused', paused);
       });
 
