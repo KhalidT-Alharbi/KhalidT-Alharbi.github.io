@@ -28,8 +28,8 @@
   --on-accent:     #07120E;
 
   --header-bg:     rgba(7, 18, 14, 0.74);
-  --panel-top:     #0B1812;
-  --panel-bottom:  #060F0B;
+  --panel:         #09150F;   /* demo panels */
+  --scrim:         rgba(5, 12, 9, 0.82);   /* flat strip behind text on photos */
   --media-bg:      #050D0A;
 
   --dg-shell:      #1A2C22;
@@ -79,8 +79,8 @@
   --on-accent:     #06101F;
 
   --header-bg:     rgba(7, 12, 21, 0.74);
-  --panel-top:     #0C1628;
-  --panel-bottom:  #060B15;
+  --panel:         #09111F;
+  --scrim:         rgba(4, 8, 15, 0.82);
   --media-bg:      #050A12;
 
   --dg-shell:      #182538;
@@ -244,23 +244,6 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   .hero-inner { grid-template-columns: 1fr 1fr; }
 }
 
-/* Signature: the side glow from HI-BSDS's own camera overlay,
-   where each edge of the video lights up when that blind spot has a target. */
-.hero::before,
-.hero::after {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  width: min(30%, 26rem);
-  pointer-events: none;
-  opacity: 0;
-  animation: glow-in 1.4s var(--ease) 0.25s forwards;
-}
-.hero::before { left: 0;  background: linear-gradient(to right, rgba(var(--accent-rgb), 0.20), rgba(var(--accent-rgb), 0.05) 40%, transparent); }
-.hero::after  { right: 0; background: linear-gradient(to left,  rgba(var(--accent-rgb), 0.20), rgba(var(--accent-rgb), 0.05) 40%, transparent); }
-
-@keyframes glow-in { to { opacity: 1; } }
-
 .hero-content { position: relative; z-index: 1; }
 
 .hero h1 {
@@ -313,7 +296,6 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
 .btn-primary {
   background: var(--accent);
   color: var(--on-accent);
-  box-shadow: 0 10px 28px -12px rgba(var(--accent-rgb), 0.7);
 }
 .btn-primary:hover { background: var(--accent-hover); }
 
@@ -353,8 +335,8 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   border-radius: 999px;
   overflow: hidden;
   pointer-events: none;
-  background: linear-gradient(180deg, rgba(var(--accent-rgb), 0.24), rgba(var(--accent-rgb), 0.12));
-  box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.38), 0 8px 22px -10px rgba(var(--accent-rgb), 0.6);
+  background: rgba(var(--accent-rgb), 0.16);
+  box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.38);
 }
 .tabs.is-ready .tab-thumb {
   transition: transform 0.55s var(--ease-out), width 0.55s var(--ease-out);
@@ -445,9 +427,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background:
-    radial-gradient(120% 70% at 50% 0%, rgba(var(--accent-rgb), 0.08), transparent 62%),
-    linear-gradient(180deg, var(--panel-top), var(--panel-bottom));
+  background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 16px;
   overflow: hidden;
@@ -646,9 +626,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
 }
 .section--band {
   --card: var(--surface-band);
-  background:
-    linear-gradient(180deg, rgba(var(--tint), 0.025), transparent 40%),
-    var(--band);
+  background: var(--band);
   border-block: 1px solid var(--line);
 }
 
@@ -734,26 +712,23 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   transition: transform 0.8s var(--ease-out);
 }
 .project:hover .project-media img { transform: scale(1.04); }
-.project-media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.05) 30%, rgba(0, 0, 0, 0.55) 62%, rgba(0, 0, 0, 0.88));
-  pointer-events: none;
-}
-
+/* Title and role sit on a flat strip along the bottom of the picture */
 .project-overlay {
   position: absolute;
-  inset-inline: 1.25rem;
-  bottom: 1.1rem;
+  inset-inline: 0;
+  bottom: 0;
   z-index: 2;
+  padding: 0.85rem 1.25rem 0.95rem;
+  background: var(--scrim);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid var(--line);
   color: #F5F7F6;
 }
 .project-overlay h3 {
   font-size: clamp(1.25rem, 2vw, 1.5rem);
   font-weight: 700;
-  margin-bottom: 0.3rem;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+  margin-bottom: 0.25rem;
 }
 
 /* Every project opens with the role, before anything else */
@@ -813,10 +788,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   inset: 0;
   display: grid;
   place-items: center;
-  background:
-    radial-gradient(60% 70% at 30% 30%, rgba(var(--accent-rgb), 0.22), transparent 70%),
-    radial-gradient(60% 70% at 80% 80%, rgba(90, 170, 255, 0.16), transparent 70%),
-    var(--media-bg);
+  background: var(--media-bg);
 }
 .media-art svg { width: 38%; max-width: 180px; height: auto; color: rgba(var(--tint), 0.55); }
 
@@ -928,7 +900,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   inset-block: 0;
   inset-inline-start: 0;
   width: 3px;
-  background: linear-gradient(180deg, var(--accent), rgba(var(--accent-rgb), 0.1));
+  background: var(--accent);
 }
 .edu-card .when {
   font-family: var(--font-mono);
@@ -958,9 +930,7 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
   display: grid;
   gap: 1.75rem;
   padding: clamp(1.6rem, 4vw, 2.75rem);
-  background:
-    radial-gradient(80% 120% at 100% 0%, rgba(var(--accent-rgb), 0.12), transparent 60%),
-    var(--card);
+  background: var(--card);
 }
 .contact-kicker {
   font-size: clamp(1.125rem, 2.2vw, 1.4375rem);
@@ -1047,7 +1017,6 @@ section[id] { scroll-margin-top: calc(var(--header-h) + 1rem); }
     animation: none !important;
     transition-duration: 0.01ms !important;
   }
-  .hero::before, .hero::after { opacity: 1; }
   .btn:hover, .project:hover, .contact-links a:hover { transform: none; }
   .project:hover .project-media img { transform: none; }
 
