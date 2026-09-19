@@ -1,5 +1,6 @@
 /* ==========================================================================
    Khalid Alharbi, portfolio v1: the only JavaScript on the site.
+   0. The Download CV button (shown only once the CV file exists).
    1. The hero showcase slider (autoplay, tabs, pause button, arrow keys).
    2. The OnKith masking illustration.
    Without JavaScript the slider still swipes and every slide is readable.
@@ -8,15 +9,15 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  /* ---------- 0. Colour preview ----------
-     While previewing ?theme=blue, keep it when switching language. */
-  if (document.documentElement.dataset.theme === 'blue') {
-    document.querySelectorAll('.lang a').forEach((link) => {
-      const url = new URL(link.getAttribute('href'), window.location.href);
-      url.searchParams.set('theme', 'blue');
-      link.href = url.href;
-    });
-  }
+  /* ---------- 0. Download CV button ----------
+     The button starts hidden and appears only if the CV file is really there,
+     so the live site never shows a button that leads to "page not found".
+     To add the CV, upload Khalid-Alharbi-CV.pdf to the root of the repo. */
+  document.querySelectorAll('[data-cv]').forEach((button) => {
+    fetch(button.href, { method: 'HEAD', cache: 'no-store' })
+      .then((response) => { if (response.ok) button.hidden = false; })
+      .catch(() => {});
+  });
 
   /* ---------- 1. Showcase slider ---------- */
 

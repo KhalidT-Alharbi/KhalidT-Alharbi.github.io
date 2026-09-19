@@ -12,13 +12,6 @@
   <link rel="alternate" hreflang="x-default" href="https://khalidt-alharbi.github.io/">
   <meta name="theme-color" content="#07120E">
 
-  <!-- معاينة الألوان: أضف ?theme=blue إلى العنوان لرؤية النسخة الزرقاء -->
-  <script>
-    if (new URLSearchParams(location.search).get('theme') === 'blue') {
-      document.documentElement.setAttribute('data-theme', 'blue');
-    }
-  </script>
-
   <link rel="icon" href="../favicon.svg" type="image/svg+xml">
   <link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
@@ -90,7 +83,8 @@
           <p class="identity">مهندس برمجيات ذكاء اصطناعي طموح. <span>أبني من البيانات حتى البرامج الثابتة.</span></p>
           <p class="hero-sub">أبني بيانات تدريب لمعالجة اللغات الطبيعية وبرامج ثابتة لدمج المستشعرات على ESP32. أدرس الهندسة الكهربائية وهندسة الحاسبات في جامعة الملك عبدالعزيز.</p>
           <div class="actions">
-            <a class="btn btn-primary" href="../Khalid-Alharbi-CV.pdf" download>
+            <!-- زر السيرة الذاتية: يبقى مخفيًا حتى يوجد الملف Khalid-Alharbi-CV.pdf -->
+            <a class="btn btn-primary" href="../Khalid-Alharbi-CV.pdf" download data-cv hidden>
               <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8m0 0L4.8 6.8M8 10l3.2-3.2M3 13.5h10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
               تحميل السيرة الذاتية
             </a>
